@@ -1,8 +1,10 @@
+# exclude directories
 venv
 staticfiles
 
 # exclude .idea directory
 /.db_utils
+/.idea
 
 # ignore .dump files
 *.dump
@@ -15,9 +17,6 @@ staticfiles
 
 # exclude .DS_Store
 .DS_Store
-
-# exclude .idea directory
-/.idea
 
 # exclude .RHistory
 .Rhistory
