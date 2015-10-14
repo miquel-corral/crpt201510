@@ -1,0 +1,148 @@
+{% extends "crpt201510/base_site.html" %}
+{% load i18n admin_static %}
+{% load set_context_var %}
+{% load get_context_var %}
+{% load get_filename %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "crpt201510/css/forms.css" %}"/>{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+
+{% block bodyclass %}{{ assessment.name }} change-form{% endblock %}
+
+{% if not is_popup %}
+{% block breadcrumbs %}
+
+<div class="breadcrumbs">
+    <a href="{% url 'index' %}">Home</a> &rsaquo; Upload Assessment
+    {{ section.name }}
+</div>
+{% endblock %}
+{% endif %}
+
+
+{% block content %}
+<div id="content-main" style="float:center;left:20%;position:relative;width:60%">
+
+
+<form name="crppdmtform" action="" method="post" id="{{ request.supervisor.user.username }}_form" enctype="multipart/form-data">{% csrf_token %}{% block form_top %}{% endblock %}
+<div>
+{{ formset.management_form }}
+<!-- to render errors div-->
+        {% if formset.errors %}
+        <div class="">
+        <p class="errornote">
+            <!-- num_errors calculat en view -->
+            {% if num_errors|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+
+            <!-- prints model errors, right style -->
+            <!-- TODO: Delete -->
+
+            {% comment %}
+            {% for dict in formset.errors %}
+                {% for key, value in dict.items %}
+                    {% if key == '__all__' %}
+                    <li>{{ value }}</li>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            {% endcomment %}
+
+            <!-- it prints all errors, field errors included-->
+            {% comment %}
+            {% for dict in formset.errors %}
+                {% if forloop.first%}
+                    {% for error in dict.values %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            {% endcomment %}
+
+        </p>
+
+        </div>
+        {% endif %}
+
+<fieldset class="module aligned">
+<!--  to render formsetv -->
+        {% for form in formset %}
+        {%comment%}
+            preparing the form to be printed
+            need to print form.id to avoid errors in post request
+            rest of hiden fields
+        {%endcomment%}
+        {{form.id}}
+        {{ form.upload_date.as_hidden }}
+        {{ form.city.as_hidden }}
+        {{ form.focal_point.as_hidden }}
+
+        {% comment %}
+        {% for field in form %}
+            {% if field.errors %}
+                {{field.label_tag}}
+                {{field.errors}}
+            {% endif %}
+        {% endfor %}
+        {% endcomment %}
+
+        <div class="module" style="float:center;border:0;">
+            <table style="width:100%;">
+            <caption>
+                <div class="section">Upload assesment</div>
+            </caption>
+            <tr>
+                <td>
+                    {{form.name.errors}}
+                    <span class="required" >{{ form.name.label_tag }}<br></span><br>{{ form.name }}
+                    <br>
+                    <span class="helptext">Please do use only alphabetic and numeric characters.</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{form.file.errors}}
+                    <span class="required">{{ form.file.label_tag }}<br></span><br>
+                    <input id="chooseFile" class="uploadFile" type="button" name="upload" value="Choose File"></input>
+                    {% if expert_request.project_document %}
+                        <a id="linkFile" href="{% url 'retrieve_file' remote_folder=assessment.code remote_file=assessment.file|get_filename  %}" target="top">{{assessment.file}}</a>
+                        <input id="labelFile" disabled style="display:none;"></input>
+                    {% else %}
+                        <input id="labelFile" disabled></input>
+                    {% endif %}
+                    {{ form.file }}
+                    <br>
+                    <span class="helptext">Please provide MS Excel files not bigger than 2MB.</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{form.comments.errors}}
+                    <span class="required" style="display:inline;">{{ form.comments.label_tag }}<br></span><br>{{ form.comments }}
+                    <br>
+                    <span class="helptext">Please provide any comment you may have about the assessment.</span>
+
+                </td>
+            </tr>
+            </table>
+        </div>
+
+
+
+
+
+        {% endfor %}
+
+
+</fieldset>
+</div> <!-- form div -->
+
+<div class="submit-row">
+    <input class="default" type="submit" name="_save" value="Save"></input>
+</div> <!-- submit row div -->
+
+</div> <!-- content.main -->
+{% endblock %}
+
+
+

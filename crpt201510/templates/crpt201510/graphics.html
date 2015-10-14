@@ -1,0 +1,152 @@
+{% extends "crpt201510/base_site.html" %}
+{% load i18n admin_static %}
+
+{% load is_true %}
+
+{% load admin_list %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "crpt201510/css/dashboard.css" %}" />{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}dashboard{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'index' %}">Home</a> &rsaquo; Graphics
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+<a name="#Top"></a>
+    <div id="col_right" style="float:left;width:20%;margin-left:5px;">
+        <div class="module unh-docs">
+            <table style="width:100%;">
+                <caption class="title-unh-docs">
+                    <div class="section">Graphics</div>
+                    <div style="float:right;padding-right:18px;"></div>
+                </caption>
+                <tr><td><a href="#Model Dimensions">Model Dimensions</a></td></tr>
+                <tr><td><a href="#Mass Transportation">Mass Transportation</a></td></tr>
+                <tr><td><a href="#Services Supply">Services Supply</a></td></tr>
+                <tr><td><a href="#Functions">Functions</a></td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div id="list" style="float:left;width:78%;margin-left:9px;">
+
+        <div class="module">
+            <table style="width:100%;">
+            <caption>
+                <div class="section">{{ assessment.city }} - {{ assessment.name }} - {{ assessment.date_uploaded }}</div>
+                <div style="float:right;padding-right:18px;"></div>
+            </caption>
+            </table>
+
+
+		<div class="column2">
+			<div class="indicator1">
+				<div id="chartFila1" class="chartFila fila1">
+                <a name="Model Dimensions"></a>
+				  <!-- chart for model dimensions AVG/MIN -->
+				  <div id="chart01" class="chart01 chart-wrapper-1"></div>
+				</div>
+
+				<div id="chartFila2" class="chartFila fila2">
+				  <!-- chart for model organizational dimension AVG/MIN -->
+				  <div id="chart02" class="chart chart-wrapper-3"></div>
+				  <!-- chart for model physical dimension AVG/MIN -->
+				  <div id="chart03" class="chart chart-wrapper-3"></div>
+				  <!-- chart for model functional dimension AVG/MIN -->
+				  <div id="chart04" class="chart chart-wrapper-3"></div>
+				</div>
+
+                <div style="clear:both;"></div>
+                <div style="border: dashed 2px;border-top:2px;width:100%;font-size:0;height:0;"></div>
+                <a name="Mass Transportation"></a>
+                <a href="#Top">Back to Top</a>
+
+				<div id="chartFila3" class="chartFila fila2">
+				  <!-- chart for mass transportation - Organizational -->
+				  <div id="chart05" class="chart chart-wrapper-3"></div>
+				  <!-- chart for mass transportation - Physical -->
+				  <div id="chart06" class="chart chart-wrapper-3"></div>
+				  <!-- chart for mass transportation - Functional -->
+				  <div id="chart07" class="chart chart-wrapper-3"></div>
+				</div>
+
+                <div style="clear:both;"></div>
+                <div style="border: dashed 2px;border-top:2px;width:100%;font-size:0;height:0;"></div>
+                <a name="Services Supply"></a>
+                <a href="#Top">Back to Top</a>
+
+				<div id="chartFila4" class="chartFila">
+				  <!-- chart for services supply - Organizational -->
+				  <div id="chart08" class="chart chart-wrapper-3"></div>
+				  <!-- chart for services supply - Physical -->
+				  <div id="chart09" class="chart chart-wrapper-3"></div>
+				  <!-- chart for services supply - Functional -->
+				  <div id="chart10" class="chart chart-wrapper-3"></div>
+				</div>
+
+                <div style="clear:both;"></div>
+                <div style="border: dashed 2px;border-top:2px;width:100%;font-size:0;height:0;"></div>
+                <a name="Functions"></a>
+                <a href="#Top">Back to Top</a>
+
+				<div id="chartFila5" class="chartFila">
+				    <!-- chart for functions - Organizational -->
+                    <div id="chart11" class="chart chart-wrapper-3"></div>
+				    <!-- chart for functions - Physical -->
+                    <div id="chart12" class="chart chart-wrapper-3"></div>
+				    <!-- chart for functions - Functional -->
+                    <div id="chart13" class="chart chart-wrapper-3"></div>
+				</div>
+
+
+
+
+			</div>
+		</div> <!-- column2 -->
+
+        <script>
+			/* var GoogleKey="1mxdAG5n5Nd7jh26l6nuBX5PRZjZY9jq1-sldbsVAX0M"; */
+			var GoogleKey="{{ assessment.results_url }}"
+			var legendFontSize='10px';
+			var titleFontSize='12px'; var titleColor='#555555';
+			var colorPalette='Set2'; var colorPick=7;
+
+			UpdateChartSpider(1,"#chart01",GoogleKey,10,"Title", false);
+			UpdateChartSpider(2,"#chart02",GoogleKey,10,"Title", false);
+			UpdateChartSpider(3,"#chart03",GoogleKey,10,"Title", false);
+			UpdateChartSpider(4,"#chart04",GoogleKey,10,"Title", false);
+			UpdateChartSpider(5,"#chart05",GoogleKey,10,"Title", false);
+			UpdateChartSpider(6,"#chart06",GoogleKey,10,"Title", false);
+			UpdateChartSpider(7,"#chart07",GoogleKey,10,"Title", false);
+
+			UpdateChartSpider(8,"#chart08",GoogleKey,10,"Title", false);
+			UpdateChartSpider(9,"#chart09",GoogleKey,10,"Title", false);
+			UpdateChartSpider(10,"#chart10",GoogleKey,10,"Title", false);
+
+
+			UpdateChartSpider(11,"#chart11",GoogleKey,10,"Title", false);
+			UpdateChartSpider(12,"#chart12",GoogleKey,10,"Title", false);
+			UpdateChartSpider(13,"#chart13",GoogleKey,10,"Title", false);
+
+		</script>
+
+
+        </div> <!-- module -->
+
+        <br>
+
+    </div> <!-- list -->
+
+</div> <!-- content-main -->
+
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
